@@ -73,19 +73,43 @@
             
             <div class="bg-maroon-600 p-6 text-center">
                 <h2 class="text-2xl font-bold text-white mb-2">شاركنا أفكارك</h2>
-                <p class="text-gray-200 text-sm">نؤمن بأن كل فكرة تمثل فرصة لتطوير خدماتنا، وتعزيز تجربة عملائنا، وتحقيق التميز المؤسسي</p>
+                <p class="text-gray-200 text-sm">كل فكرة تساهم في الارتقاء بخدماتنا المؤسسية هي محل تقدير واهتمام</p>
             </div>
 
             <form id="submissionForm" class="p-8 space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">اسم الموظف <span class="text-gray-400 font-normal">(اختياري)</span></label>
-                        <input type="text" name="employeeName" placeholder="" class="bank-input w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800">
+                        <input type="text" name="employeeName" placeholder="أدخل اسمك" class="bank-input w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800">
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">الإدارة / الفرع <span class="text-gray-400 font-normal">(اختياري)</span></label>
-                        <input type="text" name="department" placeholder="" class="bank-input w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800">
+                        <input type="text" name="department" placeholder="مثل: إدارة الموارد البشرية" class="bank-input w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800">
                     </div>
+                </div>
+
+                <!-- إضافة حقل فئة المقترح -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">فئة المقترح <span class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <select id="categorySelect" name="category" required class="bank-input w-full px-4 py-3 pr-10 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 appearance-none cursor-pointer">
+                            <option value="" disabled selected>اختر فئة المقترح...</option>
+                            <option value="خدمات تجارية">خدمات تجارية</option>
+                            <option value="خدمات بنكية">خدمات بنكية</option>
+                            <option value="خدمات تمويلية">خدمات تمويلية</option>
+                            <option value="حوالات">حوالات</option>
+                            <option value="خدمات رقمية">خدمات رقمية</option>
+                            <option value="خدمات تسويقية">خدمات تسويقية</option>
+                            <option value="other">غير ذلك...</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none"></i>
+                    </div>
+                </div>
+
+                <!-- حقل إضافي يظهر فقط عند اختيار "غير ذلك" -->
+                <div id="otherCategoryDiv" class="hidden transition-all duration-300">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">يرجى كتابة التصنيف <span class="text-red-500">*</span></label>
+                    <input type="text" id="otherCategoryInput" name="otherCategory" placeholder="اكتب الفئة هنا..." class="bank-input w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800">
                 </div>
 
                 <div>
@@ -114,12 +138,35 @@
         // الرابط الفعلي الخاص بك
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxXmle-w0D-Itxb1J0wqmvRS1CUMef8RjwoCAzPmwdKMESH4eBixjKbbHt3K4NbyIehfA/exec';
 
+        // إظهار/إخفاء حقل "غير ذلك"
+        const categorySelect = document.getElementById('categorySelect');
+        const otherCategoryDiv = document.getElementById('otherCategoryDiv');
+        const otherCategoryInput = document.getElementById('otherCategoryInput');
+
+        categorySelect.addEventListener('change', function() {
+            if (this.value === 'other') {
+                otherCategoryDiv.classList.remove('hidden');
+                otherCategoryInput.required = true;
+                otherCategoryInput.focus();
+            } else {
+                otherCategoryDiv.classList.add('hidden');
+                otherCategoryInput.required = false;
+                otherCategoryInput.value = ''; // تفريغ الحقل إذا تراجع المستخدم
+            }
+        });
+
         // ================= إرسال المقترح =================
         document.getElementById('submissionForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
             const msgDiv = document.getElementById('statusMessage');
+            
+            // معالجة الفئة قبل الإرسال (إذا اختار "غير ذلك"، نأخذ القيمة من الحقل النصي)
             const formData = new FormData(this);
+            if (formData.get('category') === 'other') {
+                formData.set('category', formData.get('otherCategory'));
+            }
+            formData.delete('otherCategory'); // إزالة الحقل الإضافي حتى لا يرسل كعمود فارغ للـ Sheet
             
             btn.disabled = true;
             btn.innerHTML = 'جاري الإرسال... <i class="fa-solid fa-spinner fa-spin"></i>';
@@ -141,6 +188,8 @@
                     btn.innerHTML = 'إرسال المقترح <i class="fa-solid fa-paper-plane"></i>';
                     btn.classList.replace('bg-gray-400', 'bg-maroon-600');
                     setTimeout(() => msgDiv.classList.add('hidden'), 5000);
+                    // إخفاء حقل "غير ذلك" بعد الإرسال الناجح
+                    otherCategoryDiv.classList.add('hidden');
                 });
         });
     </script>
