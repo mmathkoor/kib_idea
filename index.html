@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بنك الكريمي الإسلامي | منصة الأفكار التطويرية</title>
+    
+    <!-- الخطوط والأيقونات -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- مكتبة Tailwind CSS للتصميم السريع والاحترافي -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Cairo', 'sans-serif'] },
+                    colors: {
+                        maroon: { 500: '#9b2241', 600: '#7B1F35', 700: '#5c1727' },
+                        gold: { 400: '#e5c158', 500: '#D4AF37', 600: '#b5952f' }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .bank-input { transition: all 0.3s ease; }
+        .bank-input:focus {
+            outline: none;
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
+        }
+
+        /* تخصيص شريط التمرير */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #7B1F35; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #5c1727; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans text-gray-800">
+
+    <!-- شريط علوي (Header) -->
+    <header class="bg-white shadow-md relative z-10 border-b-4 border-gold-500 w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            
+            <div class="flex items-center gap-4">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUIEjuNeKPxjlno3TAiyi8ChJaeKSS4XcbqC_8IPoHXa5SImOeE6YlKEs&s=10" 
+                     alt="بنك الكريمي الإسلامي" class="h-14 object-contain">
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold text-maroon-600">منصة الأفكار التطويرية</h1>
+                </div>
+            </div>
+            
+            <!-- تم إزالة زر لوحة التحكم من هنا ليكون مخصصاً للموظفين فقط -->
+
+        </div>
+    </header>
+
+    <!-- ================= الواجهة الرئيسية (تقديم المقترح) ================= -->
+    <main id="formView" class="flex-grow flex items-center justify-center p-4 py-10 w-full">
+        <div class="bg-white w-full max-w-3xl rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            
+            <div class="bg-maroon-600 p-6 text-center">
+                <h2 class="text-2xl font-bold text-white mb-2">شاركنا أفكارك</h2>
+                <p class="text-gray-200 text-sm">كل فكرة تساهم في الارتقاء بخدماتنا المؤسسية هي محل تقدير واهتمام</p>
+            </div>
+
+            <form id="submissionForm" class="p-8 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">اسم الموظف <span class="text-gray-400 font-normal">(اختياري)</span></label>
+                        <input type="text" name="employeeName" placeholder="" class="bank-input w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">الإدارة / الفرع <span class="text-gray-400 font-normal">(اختياري)</span></label>
+                        <input type="text" name="department" placeholder="" class="bank-input w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">نص المقترح التطويري <span class="text-red-500">*</span></label>
+                    <textarea name="proposalText" rows="5" required placeholder="اشرح فكرتك بوضوح هنا..." class="bank-input w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800 resize-none"></textarea>
+                </div>
+
+                <div id="statusMessage" class="hidden p-4 rounded-lg text-sm font-bold text-center"></div>
+
+                <button type="submit" id="submitBtn" class="w-full bg-maroon-600 hover:bg-maroon-700 text-white font-bold py-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex justify-center items-center gap-2">
+                    <span>إرسال المقترح</span>
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- التذييل -->
+    <footer class="bg-white py-4 text-center text-sm text-gray-500 border-t border-gray-200 mt-auto w-full">
+        <p>جميع الحقوق محفوظة &copy; <span id="year"></span> بنك الكريمي الإسلامي</p>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // الرابط الفعلي الخاص بك
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxXmle-w0D-Itxb1J0wqmvRS1CUMef8RjwoCAzPmwdKMESH4eBixjKbbHt3K4NbyIehfA/exec';
+
+        // ================= إرسال المقترح =================
+        document.getElementById('submissionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const msgDiv = document.getElementById('statusMessage');
+            const formData = new FormData(this);
+            
+            btn.disabled = true;
+            btn.innerHTML = 'جاري الإرسال... <i class="fa-solid fa-spinner fa-spin"></i>';
+            btn.classList.replace('bg-maroon-600', 'bg-gray-400');
+            msgDiv.classList.add('hidden');
+            
+            fetch(SCRIPT_URL, { method: 'POST', body: formData })
+                .then(response => {
+                    msgDiv.textContent = 'تم استلام مقترحك بنجاح. شكراً لاهتمامك!';
+                    msgDiv.className = 'p-4 rounded-lg text-sm font-bold text-center bg-green-100 text-green-700 border border-green-300 block';
+                    this.reset();
+                })
+                .catch(error => {
+                    msgDiv.textContent = 'حدث خطأ في الاتصال، يرجى المحاولة لاحقاً.';
+                    msgDiv.className = 'p-4 rounded-lg text-sm font-bold text-center bg-red-100 text-red-700 border border-red-300 block';
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = 'إرسال المقترح <i class="fa-solid fa-paper-plane"></i>';
+                    btn.classList.replace('bg-gray-400', 'bg-maroon-600');
+                    setTimeout(() => msgDiv.classList.add('hidden'), 5000);
+                });
+        });
+    </script>
+</body>
+</html>
