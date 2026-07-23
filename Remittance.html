@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بنك الكريمي الإسلامي | مسابقة نظام الحوالات</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Cairo', 'sans-serif'] },
+                    colors: {
+                        maroon: { 500: '#9b2241', 600: '#7B1F35', 700: '#5c1727' },
+                        gold: { 400: '#e5c158', 500: '#D4AF37', 600: '#b5952f' }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .bank-input { transition: all 0.3s ease; }
+        .bank-input:focus {
+            outline: none;
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
+        }
+
+        /* تخصيص شريط التمرير */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #7B1F35; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #5c1727; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans text-gray-800">
+
+    <header class="bg-white shadow-md relative z-10 border-b-4 border-gold-500 w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUIEjuNeKPxjlno3TAiyi8ChJaeKSS4XcbqC_8IPoHXa5SImOeE6YlKEs&s=10" alt="بنك الكريمي الإسلامي" class="h-14 object-contain">
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold text-maroon-600">مسابقة إطلاق نظام الحوالات</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="formView" class="flex-grow flex items-center justify-center p-4 py-10 w-full">
+        <div class="bg-white w-full max-w-3xl rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            
+            <div class="bg-maroon-600 p-6 text-center">
+                <h2 class="text-2xl font-bold text-white mb-2">شاركنا ابتكارك</h2>
+                <p class="text-gray-200 text-sm">كن جزءاً من النجاح واقترح اسماً لنظام الحوالات الجديد الخاص ببنك الكريمي الإسلامي. أفضل اسم سيحصل على جائزة نقدية قيمة!</p>
+            </div>
+
+            <form id="submissionForm" class="p-8 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">اسم الموظف <span class="text-red-500">*</span></label>
+                        <input type="text" name="employeeName" required placeholder="الاسم الرباعي" class="bank-input w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">الإدارة / الفرع <span class="text-red-500">*</span></label>
+                        <input type="text" name="department" required placeholder="مثال: إدارة التسويق" class="bank-input w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">الرقم الوظيفي <span class="text-red-500">*</span></label>
+                    <input type="number" name="employeeId" required placeholder="أدخل رقمك الوظيفي" class="bank-input w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-800">
+                </div>
+
+                <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">الأسماء المقترحة لنظام الحوالات <span class="text-red-500">*</span></label>
+                    <p class="text-xs text-gray-500 mb-4">يمكنك اقتراح اسم واحد أو إضافة المزيد من الأسماء (حتى 100 اسم) لزيادة فرصتك بالفوز.</p>
+                    
+                    <div id="namesContainer" class="space-y-3">
+                        <div class="relative">
+                            <input type="text" name="suggestedName[]" required placeholder="الاسم المقترح (1)" class="bank-input w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-800">
+                        </div>
+                    </div>
+
+                    <button type="button" id="addNameBtn" class="mt-4 text-maroon-600 font-bold text-sm flex items-center gap-2 hover:text-maroon-700 transition-colors bg-maroon-600/10 px-4 py-2 rounded-lg">
+                        <i class="fa-solid fa-plus"></i> إضافة اسم آخر
+                    </button>
+                    <p id="limitWarning" class="text-xs text-red-500 mt-2 hidden">لقد وصلت للحد الأقصى (100 اسم)</p>
+                </div>
+
+                <div class="bg-gray-50 border border-gray-200 rounded-lg p-5 mt-4">
+                    <h3 class="font-bold text-gray-800 mb-3 text-sm"><i class="fa-solid fa-scale-balanced text-maroon-600 ml-1"></i> الشروط والأحكام للمسابقة:</h3>
+                    <div class="h-32 overflow-y-auto text-xs text-gray-600 mb-4 pl-2 space-y-2 border-b border-gray-200 pb-4">
+                        <p>1. أن يعكس الاسم هوية بنك الكريمي الإسلامي ورؤيته الاستراتيجية في خدمة قطاع الشركات وكبار العملاء والمنظمات.</p>
+                        <p>2. أن يكون الاسم مبتكراً، عصرياً، يعكس السرعة والأمان والموثوقية، ولا يتشابه مع أسماء أنظمة الحوالات في البنوك المنافسة.</p>
+                        <p>3. يعتبر الاسم الفائز ملكاً حصرياً لبنك الكريمي الإسلامي، ويحق للبنك استخدامه وتعديله وتسجيله كعلامة تجارية دون أي مطالبات مستقبلية.</p>
+                        <p>4. تخضع عملية الفرز والاختيار للجنة متخصصة معينة من الإدارة العليا، وقراراتها نهائية وملزمة.</p>
+                        <p>5. يحق للموظف المشاركة بأكثر من اسم (حتى 100 اسم) لزيادة فرص الفوز بالجائزة النقدية، وفي حال تطابق الأسماء الفائزة تكون الأولوية لمن أرسل أولاً.</p>
+                    </div>
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" required class="mt-1 w-4 h-4 text-maroon-600 rounded border-gray-300 focus:ring-maroon-500">
+                        <span class="text-sm text-gray-800 font-bold">قرأت وأوافق على جميع الشروط والأحكام الخاصة بالمسابقة.</span>
+                    </label>
+                </div>
+
+                <div id="statusMessage" class="hidden p-4 rounded-lg text-sm font-bold text-center"></div>
+
+                <button type="submit" id="submitBtn" class="w-full bg-maroon-600 hover:bg-maroon-700 text-white font-bold py-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex justify-center items-center gap-2">
+                    <span>إرسال المقترحات</span>
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <footer class="bg-white py-4 text-center text-sm text-gray-500 border-t border-gray-200 mt-auto w-full">
+        <p>جميع الحقوق محفوظة &copy; <span id="year"></span> بنك الكريمي الإسلامي</p>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // رابط جوجل شيت المحدث الخاص بك
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzudgH9aC78CvFwrmaH7FsVBtmI1YpL2VOkECIhim220M04vhXS20QSbX_r_nfW4PjJ/exec';
+        
+        // منطق إضافة حقول الأسماء
+        const namesContainer = document.getElementById('namesContainer');
+        const addNameBtn = document.getElementById('addNameBtn');
+        const limitWarning = document.getElementById('limitWarning');
+        let nameCount = 1;
+
+        addNameBtn.addEventListener('click', () => {
+            if (nameCount >= 100) {
+                limitWarning.classList.remove('hidden');
+                addNameBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                return;
+            }
+            
+            nameCount++;
+            const div = document.createElement('div');
+            div.className = 'relative flex gap-2 items-center mt-2 animate-fade-in';
+            div.innerHTML = `
+                <input type="text" name="suggestedName[]" required placeholder="الاسم المقترح (${nameCount})" class="bank-input w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-800">
+                <button type="button" class="bg-red-50 text-red-500 hover:bg-red-100 p-3 rounded-lg border border-red-200 transition-colors" onclick="this.parentElement.remove(); nameCount--; limitWarning.classList.add('hidden'); addNameBtn.classList.remove('opacity-50', 'cursor-not-allowed');">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            `;
+            namesContainer.appendChild(div);
+        });
+
+        // إرسال البيانات
+        document.getElementById('submissionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('submitBtn');
+            const msgDiv = document.getElementById('statusMessage');
+            
+            // تجميع الأسماء المقترحة في نص واحد مفصول بفواصل
+            const nameInputs = document.querySelectorAll('input[name="suggestedName[]"]');
+            let suggestedNamesList = [];
+            nameInputs.forEach(input => {
+                if(input.value.trim() !== '') suggestedNamesList.push(input.value.trim());
+            });
+            
+            const formData = new FormData(this);
+            // إزالة مصفوفة الأسماء واستبدالها بنص مدمج ليسهل تخزينه في الجوجل شيت
+            formData.delete('suggestedName[]');
+            formData.append('suggestedNames', suggestedNamesList.join(' ، '));
+            
+            btn.disabled = true;
+            btn.innerHTML = 'جاري الإرسال... <i class="fa-solid fa-spinner fa-spin"></i>';
+            btn.classList.replace('bg-maroon-600', 'bg-gray-400');
+            msgDiv.classList.add('hidden');
+            
+            fetch(SCRIPT_URL, { method: 'POST', body: formData })
+                .then(response => {
+                    msgDiv.textContent = 'تم استلام مقترحاتك بنجاح. نتمنى لك التوفيق!';
+                    msgDiv.className = 'p-4 rounded-lg text-sm font-bold text-center bg-green-100 text-green-700 border border-green-300 block';
+                    this.reset();
+                    // إعادة تعيين حقول الأسماء لواحد فقط
+                    namesContainer.innerHTML = `
+                        <div class="relative">
+                            <input type="text" name="suggestedName[]" required placeholder="الاسم المقترح (1)" class="bank-input w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-800">
+                        </div>
+                    `;
+                    nameCount = 1;
+                    limitWarning.classList.add('hidden');
+                    addNameBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                })
+                .catch(error => {
+                    msgDiv.textContent = 'حدث خطأ في الاتصال، يرجى المحاولة لاحقاً.';
+                    msgDiv.className = 'p-4 rounded-lg text-sm font-bold text-center bg-red-100 text-red-700 border border-red-300 block';
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = 'إرسال المقترحات <i class="fa-solid fa-paper-plane"></i>';
+                    btn.classList.replace('bg-gray-400', 'bg-maroon-600');
+                    setTimeout(() => msgDiv.classList.add('hidden'), 7000);
+                });
+        });
+    </script>
+</body>
+</html>
