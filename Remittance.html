@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسابقة نظام الحوالات | انتهت فترة التسجيل</title>
+    
+    <!-- الخطوط والأيقونات -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+    
+    <!-- مكتبة Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Cairo', 'sans-serif'] },
+                    colors: {
+                        maroon: { 500: '#9b2241', 600: '#7B1F35', 700: '#5c1727' },
+                        gold: { 400: '#e5c158', 500: '#D4AF37', 600: '#b5952f' }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .pulse-icon {
+            animation: pulse-soft 2s infinite;
+        }
+        
+        @keyframes pulse-soft {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans text-gray-800">
+
+    <!-- شريط علوي (Header) -->
+    <header class="bg-white shadow-md relative z-10 border-b-4 border-gold-500 w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUIEjuNeKPxjlno3TAiyi8ChJaeKSS4XcbqC_8IPoHXa5SImOeE6YlKEs&s=10" alt="بنك الكريمي الإسلامي" class="h-14 object-contain">
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold text-maroon-600">إدارة التسويق</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- محتوى الصفحة (رسالة الانتهاء) -->
+    <main class="flex-grow flex items-center justify-center p-4 py-10 w-full">
+        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-xl border border-gray-100 overflow-hidden text-center p-10 md:p-14">
+            
+            <!-- أيقونة معبرة -->
+            <div class="w-24 h-24 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-green-100 pulse-icon">
+                <i class="fa-solid fa-check-to-slot text-5xl"></i>
+            </div>
+            
+            <!-- العنوان -->
+            <h2 class="text-3xl font-bold text-maroon-600 mb-4">انتهت فترة تقديم المقترحات</h2>
+            
+            <!-- نص الرسالة -->
+            <div class="space-y-4 text-gray-600 text-lg leading-relaxed">
+                <p>
+                    نتقدم بخالص الشكر والتقدير لجميع الزملاء والزميلات الذين شاركوا بأفكارهم ومقترحاتهم الإبداعية لتسمية <strong class="text-gray-800">نظام الحوالات الجديد</strong>.
+                </p>
+                <p>
+                    حجم التفاعل والمشاركات كان رائعاً ويعكس حرصكم على أن يكون <strong class="text-gray-800">بنك الكريمي الإسلامي</strong> دائماً في الصدارة.
+                </p>
+                
+                <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 mt-6 inline-block w-full text-right">
+                    <h3 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-bell text-gold-500"></i> ماذا بعد؟
+                    </h3>
+                    <p class="text-sm text-gray-600">
+                        تقوم اللجنة حالياً بفرز ودراسة كافة المقترحات المقدمة. سيتم الإعلان عن الاسم الفائز واسم الموظف الرابح بالجائزة النقدية قريباً عبر قنوات التواصل الداخلية للبنك.
+                    </p>
+                </div>
+            </div>
+
+            <!-- زر العودة (اختياري) -->
+            <div class="mt-10">
+                <a href="https://kibanks.com/ar" target="_blank" class="inline-block bg-maroon-600 hover:bg-maroon-700 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+                    العودة لموقع البنك
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- التذييل -->
+    <footer class="bg-white py-4 text-center text-sm text-gray-500 border-t border-gray-200 mt-auto w-full">
+        <p>جميع الحقوق محفوظة &copy; <span id="year"></span> بنك الكريمي الإسلامي</p>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
